@@ -46,7 +46,7 @@ mycobotのDHパラメータは下表のようになります。
 | 6     | -PI/2      | 0     | 43.6     | theta_6 | 0           |
 
 mycobotのURDFファイルは下記のようになります。
-<detail>
+<details>
 <summary>mycobot_urdf.urdf</summary>
 
 ```xml
@@ -173,7 +173,7 @@ mycobotのURDFファイルは下記のようになります。
   </joint>
 </robot>
 ```
-</detail>
+</details>
 
 実行するPythonスクリプトを`example.py`とし、次のようなフォルダ構成を想定しています。
 ```bash
