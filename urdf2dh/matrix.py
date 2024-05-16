@@ -44,7 +44,7 @@ def Trans(x:float,y:float,z:float)->NDArray[(4,4), float]:
 
 def homogeneous_transformation_matrix(a:float, alpha:float, d:float, theta:float)->NDArray[(4,4),float]:
     """Compute homogeneous transformation matrix based on Modified DH comvention.
-    In this function, homogeneous transformation matrix is computed bellow following
+    In this function, homogeneous transformation matrix is computed following
     T^{i-1}_{i} = Trans(a,0,0)*RotX(alpha)*Trans(0,0,d)*RotZ(theta)
 
     Parameters

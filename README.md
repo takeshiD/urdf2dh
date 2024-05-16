@@ -1,19 +1,12 @@
 # urdf2dh
-URDFファイルで定義されたマニピュレータからDHパラメータを抽出する機能を実装しています。  
-
-> __Note__  
-> `2021.6.1` : 直列リンクロボットを想定した機能に限定しており、並列リンクロボットは想定していません。
-
+This library extract DH parameter from URDF only sequence link robot.
 
 # Features
-* URDFファイルからDHパラメータを計算
-* URDFファイルからDHパラメータを基本とした同次変換行列を生成
+* Extract DH-Parameter from URDF
+* Generate Homogeneous transformation matrix based on DH-Parameter from URDF
 
-
-# How to use
-## URDFからDHパラメータを計算する
-DHパラメータを知りたいURDFファイル`example.urdf`を用意し`from_urdf("exmaple.urdf")`を実行することでDHパラメータが計算されます。  
-DHパラメータはDict in Listで出力されます。リストの長さは関節の数と一致します。
+# Usage
+## Extract DH-Parameter
 ```python
 from urdf2dh import from_urdf
 dhparams = from_urdf("exmaple.urdf")
@@ -182,7 +175,7 @@ mycobotのURDFファイルは下記のようになります。
     ─ mycobot_urdf.urdf
 ```
 
-example.pyの内容と、その実行結果が次のようになります。
+example.pyの実行結果は次のようになります。
 ```python
 from urdf2dh import from_urdf
 print(from_urdf("mycobot_urdf.urdf"))
