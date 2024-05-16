@@ -1,10 +1,58 @@
 import pytest
-from urdf2dh.dhparam import _calculate_a
-# import numpy as np
+import numpy as np
+from urdf2dh.type import Vec3f
+from typing import Tuple
+from urdf2dh.dhparam import get_a, get_alpha, get_d_theta
 
 
-@pytest.mark.parametrize(('u1, u2, p1, p2, expected'), [
-    ([0, 0, 1], [0, 0, 1], [0, 0, 0], [0, 0, 0.13156], 0.0)
+@pytest.mark.parametrize(('inputed', 'expected'), [
+    (tuple(np.array([0, 0, 1]),
+           np.array([0, 0, 1]),
+           np.array([0, 0, 0]),
+           np.array([1, 1, 1]),
+           ),
+     tuple(0,
+           True,
+           np.array([0, 0, 0]),
+           np.array([0, 0, 0]),
+           )
+     )
 ])
-def test_calculate_a(u1, u2, p1, p2, expected):
-    assert _calculate_a(u1, u2, p1, p2) == expected
+def test_get_a(
+    inputed: Tuple[Vec3f, Vec3f, Vec3f, Vec3f],
+    expected: Tuple[float, bool, Vec3f, Vec3f]
+):
+    assert get_a(*inputed) == expected
+
+
+@pytest.mark.parametrize(('inputed', 'expected'), [
+    (tuple(np.array([0, 0, 1]),
+           np.array([0, 0, 1]),),
+     0.0,
+     )
+])
+def test_get_alpha(
+    inputed: Tuple[Vec3f, Vec3f],
+    expected: float
+):
+    assert get_alpha(*inputed) == expected
+
+
+@pytest.mark.parametrize(('inputed', 'expected'), [
+    (tuple(np.array([0, 0, 1]),
+           np.array([0, 0, 1]),
+           np.array([0, 0, 0]),
+           np.array([1, 1, 1]),
+           ),
+     tuple(0,
+           True,
+           np.array([0, 0, 0]),
+           np.array([0, 0, 0]),
+           )
+     )
+])
+def test_get_d_theta(
+    inputed: Tuple[Vec3f, Vec3f, Vec3f, Vec3f],
+    expected: Tuple[float, bool, Vec3f, Vec3f]
+):
+    assert get_d_theta(*inputed) == expected
