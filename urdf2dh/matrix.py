@@ -1,7 +1,8 @@
 import numpy as np
-from nptyping import NDArray
+from .type import Mat4f
 
-def _RotZ(roll: float) -> NDArray[(4,4), float]:
+
+def _RotZ(roll: float) -> Mat4f:
     c = np.cos(roll)
     s = np.sin(roll)
     return np.array([
@@ -11,16 +12,19 @@ def _RotZ(roll: float) -> NDArray[(4,4), float]:
         [0,  0, 0, 1]
         ])
 
-def _RotY(pitch: float) -> NDArray[(4,4), float]:
+
+def _RotY(pitch: float) -> Mat4f:
     c = np.cos(pitch)
     s = np.sin(pitch)
     return np.array([
-        [ c, 0, s, 0],
-        [ 0, 1, 0, 0],
+        [c, 0, s, 0],
+        [0, 1, 0, 0],
         [-s, 0, c, 0],
-        [ 0, 0, 0, 1]
+        [0, 0, 0, 1]
         ])
-def _RotX(yaw: float) -> NDArray[(4,4), float]:
+
+
+def _RotX(yaw: float) -> Mat4f:
     c = np.cos(yaw)
     s = np.sin(yaw)
     return np.array([
@@ -30,11 +34,13 @@ def _RotX(yaw: float) -> NDArray[(4,4), float]:
         [0, 0,  0, 1]
         ])
 
-def Rot(roll:float, pitch:float, yaw:float) -> NDArray[(4,4), float]:
+
+def Rot(roll: float, pitch: float, yaw: float) -> Mat4f:
     tmp = np.dot(_RotZ(roll), _RotY(pitch))
     return np.dot(tmp, _RotX(yaw))
 
-def Trans(x:float,y:float,z:float)->NDArray[(4,4), float]:
+
+def Trans(x: float, y: float, z: float) -> Mat4f:
     return np.array([
         [1, 0, 0, x],
         [0, 1, 0, y],
@@ -42,23 +48,31 @@ def Trans(x:float,y:float,z:float)->NDArray[(4,4), float]:
         [0, 0, 0, 1]
     ])
 
-def homogeneous_transformation_matrix(a:float, alpha:float, d:float, theta:float)->NDArray[(4,4),float]:
-    """Compute homogeneous transformation matrix based on Modified DH comvention.
+
+def homogeneous_transformation_matrix(
+    a: float,
+    alpha: float,
+    d: float,
+    theta: float
+) -> Mat4f:
+    """
+    Compute homogeneous transformation matrix based on Modified DH comvention.
     In this function, homogeneous transformation matrix is computed following
     T^{i-1}_{i} = Trans(a,0,0)*RotX(alpha)*Trans(0,0,d)*RotZ(theta)
 
     Parameters
     --------
     a : float
-        The length of straight lines perpendicular 
+        The length of straight lines perpendicular
         from the z_{i-1} axis to the z_{i} axis.
     alpha : float
         The angle between the z_{i-1} axis and the z_{i} axis.
     d : float
-        The length between i-1 coordinate origin O_{i-1} and i coordinate origin O_{i}
+        The length between i-1 coordinate origin O_{i-1} and
+        i coordinate origin O_{i}
         when translate direction z axis.
     theta : float
-        The angle at which x_{i-1} axis and x_{i} axis match 
+        The angle at which x_{i-1} axis and x_{i} axis match
         when rotated around z_{i-1} axis
 
     Returns

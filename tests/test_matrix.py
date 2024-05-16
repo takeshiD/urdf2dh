@@ -1,7 +1,7 @@
 import pytest
 from urdf2dh.matrix import (
     _RotX, _RotY, _RotZ,
-    Rot, Trans, homogeneous_transform
+    Rot, Trans, homogeneous_transformation_matrix
 )
 import numpy as np
 
@@ -38,4 +38,7 @@ def test_Trans(x, y, z, expected):
     (0, 0, 0, 0, np.eye(4))
 ])
 def test_homogeneous_transform(a, alpha, d, theta, expected):
-    assert np.allclose(homogeneous_transform(a, alpha, d, theta), expected)
+    assert np.allclose(
+        homogeneous_transformation_matrix(a, alpha, d, theta),
+        expected
+    )
