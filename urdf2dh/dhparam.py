@@ -1,6 +1,5 @@
 import numpy as np
 from typing import Tuple
-from nptyping import Float
 from .type import Mat4f, Vec3f
 
 EPSILON = 10e-8
@@ -11,34 +10,34 @@ EPSILON = 10e-8
 # 3. compute d and theta
 
 
-class DH:
-    def __init__(self, n):
-        self.dhparams = [
-            namedtuple("dh", "a", "alpha", "d", "theta", "origin") for _ in range(n)
-        ]
+# class DH: def __init__(self, n):
+#         self.dhparams = [
+#             namedtuple("dh", "a", "alpha", "d", "theta", "origin") for _ in range(n)
+#         ]
 
 
-def get_dh_parameter(z, p):
-    n = len(z)
-    # dh =
-    a = np.zeros(n-1)
-    cn = np.zeros(n-1, 3)
-    for i in range(n-1):
-        _a, _parallel, _cp1, _cp2 = get_a(z[i], z[i+1], p[i], p[i+1])
-    a[i] = _a
-    cn[i] = _cp1
-    # alpha
-    d = np.zeros(n-1)
-    # for i in range(n-1):
+# def get_dh_parameter(z, p):
+#     n = len(z)
+#     # dh =
+#     a = np.zeros(n-1)
+#     cn = np.zeros(n-1, 3)
+#     for i in range(n-1):
+#         _a, _parallel, _cp1, _cp2 = get_a(z[i], z[i+1], p[i], p[i+1])
+#     a[i] = _a
+#     cn[i] = _cp1
+#     # alpha
+#     d = np.zeros(n-1)
+#     # for i in range(n-1):
 
-    return dh
+#     return dh
 
 
 def get_a(
     z1: Vec3f, z2: Vec3f,
     p1: Vec3f, p2: Vec3f
 ) -> Tuple[float, Vec3f, Vec3f]:
-    """NDArray[3
+    """Calculate shortest length `a` and intersections between joint and joint.
+
     Parameters
     --------
     z1 : array_like(3)
@@ -46,9 +45,9 @@ def get_a(
     z2 : array_like(3)
         direction vector of z2 axis on cartecian coordinate
     p1 : array_like(3)
-        point through z1 axis line on cartecian coordinate
+        a point through z1 axis line on cartecian coordinate
     p2 : array_like(3)
-        point through z2 axis line on cartecian coordinate
+        a point through z2 axis line on cartecian coordinate
 
     Returns
     --------
@@ -57,10 +56,17 @@ def get_a(
         from the z1 axis to the z2 axis.
     parallel : bool
         z1 and z2 are parallel or not parallel.
-    cp1: numpy.array(3,)
-    cp2: numpy.array(3,)
+    cp1: numpy.array(3)
+    cp2: numpy.array(3)
+        Intersections of the perpendicular line from the shortest
+        distance between the line l1 and l2.
+        cp1 is intersection on l1, cp2 is intersection on l2.
+        Note: l1 is line formed by z1 and p1, l2 is line formed by z2 and p2.
 
     Raises
+    --------
+
+    Examples
     --------
 
     """
@@ -102,7 +108,7 @@ def get_a(
     cp1 = p1+s[0]*z1
     cp2 = p2+s[1]*z2
     a = np.linalg.norm(cp1-cp2)
-    return tuple(a, parallel, cp1, cp2)
+    return (a, parallel, cp1, cp2)
 
 
 def get_alpha(z1: Vec3f, z2: Vec3f) -> float:

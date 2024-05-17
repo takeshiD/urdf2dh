@@ -19,3 +19,6 @@ ipython = "^8.24.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest_ini_options]
+testpaths = ["tests"]
